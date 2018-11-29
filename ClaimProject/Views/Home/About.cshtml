@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "About";
+}
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+<p>Use this area to provide additional information.</p>
+
+<p>Click the button to get your coordinates.</p>
+
+<button onclick="getLocation()">Try It</button>
+
+<p id="demo"></p>
+<div id="mapholder"></div>
+
+<script>
+var x = document.getElementById("demo");
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    x.innerHTML = "Latitude: " + position.coords.latitude +
+        "<br>Longitude: " + position.coords.longitude;
+    var latlon = position.coords.longitude + "," + position.coords.latitude ;
+
+    var img_url = "https://static-maps.yandex.ru/1.x/?z=16&l=map&ll="+latlon+"&pt="+latlon+",pm2gnl&size=300,300";
+
+    document.getElementById("mapholder").innerHTML = "<img src='" + img_url + "'>";
+}
+</script>
